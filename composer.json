@@ -31,12 +31,12 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Defro\\CIPhoneNumber\\": "src/"
+            "CodeIgniterPhoneNumber\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Defro\\CIPhoneNumber\\Tests\\": "tests/"
+            "CodeIgniterPhoneNumber\\Tests\\": "tests/"
         }
     },
     "require": {
