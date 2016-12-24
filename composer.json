@@ -1,0 +1,58 @@
+{
+    "name": "defro/codeigniter-phonenumber",
+    "description": "LibPhoneNumber for PHP & jQuery plugin Intl-Tel-Input for CodeIgniter",
+    "keywords": [
+        "codeigniter",
+        "intl-tel-input",
+        "libphonenumber",
+        "international telephone number",
+        "telephone number",
+        "phonenumber",
+        "phone-number",
+        "mobile",
+        "phone",
+        "form",
+        "validation",
+        "geocoding",
+        "geolocation"
+    ],
+    "homepage": "https://github.com/defro/codeigniter-phonenumber",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Joël Gaujard",
+            "email": "defro@users.noreply.github.com",
+            "homepage": "https://github.com/defro",
+            "role": "Lead Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Defro\\CIPhoneNumber\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Defro\\CIPhoneNumber\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "giggsey/libphonenumber-for-php": "^8.0",
+        "defro/intl-tel-input": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7.4"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/defro/intl-tel-input.git"
+        }
+    ],
+    "suggest": {
+        "joel-depiltech/codeigniter-gettext": "Use Gettext for translation with CodeIgniter"
+    }
+}
