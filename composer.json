@@ -41,15 +41,24 @@
     },
     "require": {
         "giggsey/libphonenumber-for-php": "^8.0",
-        "defro/intl-tel-input": "dev-master"
+        "jackocnr/intl-tel-input": "v10.0.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.4"
     },
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/defro/intl-tel-input.git"
+            "type": "package",
+            "package":
+            {
+                "name": "jackocnr/intl-tel-input",
+                "version": "v10.0.2",
+                "dist":
+                {
+                    "url": "https://github.com/jackocnr/intl-tel-input/archive/v10.0.2.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "suggest": {
