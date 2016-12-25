@@ -1,12 +1,13 @@
 <?php
-//namespace CodeIgniterPhoneNumber; // CodeIgniter cannot load Library with namespace
+// CodeIgniter cannot load Library with namespace
+//namespace CodeIgniterPhoneNumber;
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use \libphonenumber\PhoneNumber;
 use \libphonenumber\PhoneNumberUtil;
 
-class LibPhoneNumber
+class CIPhoneNumber
 {
 
     public function __construct()
