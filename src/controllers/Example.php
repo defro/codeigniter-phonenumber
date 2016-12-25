@@ -14,7 +14,7 @@ class Example extends CI_Controller
 	public function index()
 	{
 		$data = array();
-		$this->load->view('example', $data);
+		$this->load->view('ciphonenumber-example', $data);
 	}
 
 }
