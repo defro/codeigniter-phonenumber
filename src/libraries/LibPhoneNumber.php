@@ -1,5 +1,5 @@
 <?php
-namespace CodeIgniterPhoneNumber;
+//namespace CodeIgniterPhoneNumber; // CodeIgniter cannot load Library with namespace
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -11,6 +11,7 @@ class LibPhoneNumber
 
     public function __construct()
     {
+        log_message('debug', "LibPhoneNumber library Class Initialized");
     }
 
     public function parse($phoneNumber, $countryIso = NULL)
