@@ -12,7 +12,7 @@ class CIPhoneNumber
 
     public function __construct()
     {
-        log_message('debug', "LibPhoneNumber library Class Initialized");
+        log_message('debug', get_class($this) . " library Class Initialized");
     }
 
     public function parse($phoneNumber, $countryIso = NULL)
