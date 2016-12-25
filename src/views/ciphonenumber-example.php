@@ -4,7 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter Phone Number Example</title>
+	<title><?php _e("Welcome to CodeIgniter Phone Number Example") ?></title>
+
+	<?php echo ciphonenumber_stylesheet() ?>
+	<?php echo ciphonenumber_stylesheet_overwrite() ?>
 
 	<style type="text/css">
 
@@ -73,6 +76,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<div id="body">
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
+		<?php echo form_open() ?>
+		<?php echo ciphonenumber_input(set_value('phone', $phoneNumbers['bcit'])) ?>
+		<?php echo form_submit('submit', __('Submit')) ?>
+		<?php echo form_close() ?>
+
 		<p>If you would like to edit this page you'll find it located at:</p>
 		<code>application/views/welcome_message.php</code>
 
@@ -84,6 +92,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 </div>
+
+<?php echo ciphonenumber_script_jquery() ?>
+<?php echo ciphonenumber_script() ?>
+<?php echo ciphonenumber_script_init() ?>
 
 </body>
 </html>
