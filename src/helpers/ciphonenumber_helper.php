@@ -13,29 +13,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('ciphonenumber_input'))
-{
-	function ciphonenumber_input($phoneNumber = NULL)
-	{
-		// Add input text field
-		$html = '<input type="tel" id="phone" name="phone" value="' . $phoneNumber . '" />';
-
-		return ( $html );
-	}
-}
-
-// ------------------------------------------------------------------------
-
 if ( ! function_exists('ciphonenumber_script_init'))
 {
-	function ciphonenumber_script_init()
+	function ciphonenumber_script_init($inputId = 'phone')
 	{
-		// Include the utils script
-		$js = base_url('vendor/jackocnr/intl-tel-input/build/js/utils.js');
+		// Load file configuration
+		$CI = &get_instance();
+		$CI->load->config('ciphonenumber');
 
-		// Initialise it on input element
+		// Build path to JS file
+		$path = $CI->config->item('ciphonenumber_intltelinput_path');
+		$path .= 'js/utils.js';
+
+		// URL to the utils script
+		$js = base_url($path);
+
+		// Initialise it
 		$html = '<script type="text/javascript">';
-		$html .= '$("#phone").intlTelInput({ utilsScript: "' . $js . '" });';
+		$html .= '$("#' . $inputId . '").intlTelInput({';
+		$html .= 'utilsScript: "' . $js . '",';
+		$html .= '});';
 		$html .= '</script>';
 
 		return ( $html );
@@ -44,18 +41,53 @@ if ( ! function_exists('ciphonenumber_script_init'))
 
 // ------------------------------------------------------------------------
 
+if ( ! function_exists('ciphonenumber_input'))
+{
+	function ciphonenumber_input($phoneNumber = NULL, $inputName = 'phone')
+	{
+		$input = form_input($inputName, $phoneNumber, array(
+				'type' => 'tel',
+				'id' => $inputName,
+				'placeholder' => __("Phone number")
+		));
+
+		return ( $input );
+	}
+}
+
+// ------------------------------------------------------------------------
+
 if ( ! function_exists('ciphonenumber_script'))
 {
-	function ciphonenumber_script($getUriOnly = FALSE)
+	function ciphonenumber_script($return = 'getHtml')
 	{
-		// Include the script
-		$js = base_url('vendor/jackocnr/intl-tel-input/build/js/intlTelInput.min.js');
-
-		if ($getUriOnly === TRUE) {
-			return ( $js );
+		// Only few type of return is allowed
+		if (!in_array($return, array('getHtml', 'getUrl', 'getPath'))) {
+			trigger_error("Unknown asked return in ciphonenumber_script helper : $return.", E_USER_WARNING);
+			return FALSE;
 		}
 
-		$html = '<script src="' . $js . '"></script>';
+		// Load file configuration
+		$CI = &get_instance();
+		$CI->load->config('ciphonenumber');
+
+		// Build path to JS file
+		$path = $CI->config->item('ciphonenumber_intltelinput_path');
+		$path .= 'js/intlTelInput.min.js';
+
+		// Return only path
+		if ($return === 'getPath')
+			return ( $path );
+
+		// Generate URL
+		$url = base_url($path);
+
+		// Return complete URL
+		if ($return === 'getUrl')
+			return ( $url );
+
+		// HTML tag for include script
+		$html = '<script src="' . $url . '"></script>';
 
 		return ( $html );
 	}
@@ -80,12 +112,17 @@ if ( ! function_exists('ciphonenumber_stylesheet_overwrite'))
 {
 	function ciphonenumber_stylesheet_overwrite()
 	{
-		$intTelInput_path = 'vendor/jackocnr/intl-tel-input/build/';
+		// Load file configuration
+		$CI = &get_instance();
+		$CI->load->config('ciphonenumber');
+
+		// Get path
+		$intTelInput_path = $CI->config->item('ciphonenumber_intltelinput_path');
 
 		// Override the path to flags.png
 		$flags = base_url($intTelInput_path . 'img/flags.png');
 		$html = '<style type="text/css">';
-		$html .= '.iti-flag {background-image: url("' . $flags . '");}';
+		$html .= '.iti-flag { background-image: url("' . $flags . '"); }';
 		$html .= '</style>';
 
 		return ( $html );
@@ -96,17 +133,35 @@ if ( ! function_exists('ciphonenumber_stylesheet_overwrite'))
 
 if ( ! function_exists('ciphonenumber_stylesheet'))
 {
-	function ciphonenumber_stylesheet($getUriOnly = FALSE)
+	function ciphonenumber_stylesheet($return = 'getHtml')
 	{
-		// URL to stylesheet
-		$css = base_url('vendor/jackocnr/intl-tel-input/build/css/intlTelInput.css');
-
-		if ($getUriOnly === TRUE) {
-			return ( $css );
+		// Only few type of return is allowed
+		if (!in_array($return, array('getHtml', 'getUrl', 'getPath'))) {
+			trigger_error("Unknown asked return in ciphonenumber_stylesheet helper : $return.", E_USER_WARNING);
+			return FALSE;
 		}
 
-		// Include the stylesheet
-		$html = '<link rel="stylesheet" href="' . $css . '" />';
+		// Load file configuration
+		$CI = &get_instance();
+		$CI->load->config('ciphonenumber');
+
+		// Build path to CSS file
+		$path = $CI->config->item('ciphonenumber_intltelinput_path');
+		$path .= 'css/intlTelInput.css';
+
+		// Return only path
+		if ($return === 'getPath')
+			return ( $path );
+
+		// Generate URL
+		$url = base_url($path);
+
+		// Return complete URL
+		if ($return === 'getUrl')
+			return ( $url );
+
+		// HTML tag for include stylesheet
+		$html = '<link rel="stylesheet" href="' . $url . '" />';
 
 		return ( $html );
 	}
