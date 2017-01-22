@@ -66,28 +66,62 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
+
+	.alert {
+		margin: 10px;
+		padding: 10px;
+		border: 1px solid #D0D0D0;
+	}
+	.alert.alert-success {
+		background-color: lightgreen;
+		border-color: darkgreen;
+		color: green;
+	}
+	.alert.alert-error {
+		background-color: palevioletred;
+		border-color: darkred;
+		color: darkred;
+	}
 	</style>
 </head>
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter Phone Number Example!</h1>
+	<?php if($message = $this->session->flashdata('success')): ?>
+	<div class="alert alert-success">
+		<?php echo $message ?>
+	</div>
+	<?php endif ?>
+
+	<?php if($message = $this->session->flashdata('error')): ?>
+	<div class="alert alert-error">
+		<?php echo $message ?>
+	</div>
+	<?php endif ?>
+
+	<h1><?php _e("Welcome to CodeIgniter Phone Number Example!") ?></h1>
 
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+		<p>
+			<?php _e("The page you are looking at is an example of CodeIgniter Phone Number package.") ?>
+			<br/>
+			<?php _e("Available on GitHub :") ?>
+			<?php echo anchor('https://github.com/defro/codeigniter-phonenumber') ?>
+		</p>
 
-		<?php echo form_open() ?>
-		<?php echo ciphonenumber_input(set_value('phone', $phoneNumbers['bcit'])) ?>
-		<?php echo form_submit('submit', __('Submit')) ?>
-		<?php echo form_close() ?>
+		<?php foreach($items AS $slug => $item): ?>
+		<fieldset>
+			<legend><?php echo strtoupper($slug) ?></legend>
+			<?php echo form_open() ?>
+			<?php echo form_error('phones[' . $slug . ']'); ?>
+			<?php echo form_label($item['label'], $slug) ?>
+			<?php echo ciphonenumber_input(set_value('phones[' . $slug . ']', $item['phone']), 'phones[' . $slug . ']') ?>
+			<?php echo form_submit('submit', __('Submit')) ?>
+			<?php echo form_close() ?>
+		</fieldset>
+		<br/>
+		<?php endforeach ?>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
@@ -95,7 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <?php echo ciphonenumber_script_jquery() ?>
 <?php echo ciphonenumber_script() ?>
-<?php echo ciphonenumber_script_init() ?>
+<?php foreach($items AS $slug => $item) echo ciphonenumber_script_init('phones[' . $slug . ']'); ?>
 
 </body>
 </html>

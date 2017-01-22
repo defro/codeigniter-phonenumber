@@ -12,7 +12,7 @@ class CIPhoneNumber
 
     public function __construct()
     {
-        log_message('debug', get_class($this) . " library Class Initialized");
+        log_message('info', get_class($this) . " Library Class Initialized");
     }
 
     public function parse($phoneNumber, $countryIso = NULL)
@@ -25,4 +25,10 @@ class CIPhoneNumber
         return ( PhoneNumberUtil::getInstance()->isValidNumber($phoneNumberInstance) );
     }
 
+    public function form_validation($phoneNumber)
+    {
+        $phoneNumberInstance = $this->parse($phoneNumber);
+
+        return($this->isValidNumber($phoneNumberInstance));
+    }
 }

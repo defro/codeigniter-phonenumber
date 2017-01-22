@@ -15,24 +15,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 if ( ! function_exists('ciphonenumber_script_init'))
 {
-	function ciphonenumber_script_init($inputId = 'phone')
+	function ciphonenumber_script_init($inputId = 'phone', array $options = array())
 	{
 		// Load file configuration
 		$CI = &get_instance();
 		$CI->load->config('ciphonenumber');
 
-		// Build path to JS file
+		// Options to configure intl-tel-input library
+		$myOptions = array();
+
+		// Build path to Utils JS file
 		$path = $CI->config->item('ciphonenumber_intltelinput_path');
 		$path .= 'js/utils.js';
-
-		// URL to the utils script
 		$js = base_url($path);
+		$myOptions['utilsScript'] = $js;
+
+		// Merge options with default ones
+		$options = array_merge($myOptions, $options);
+
+		// jQuery need to double escape special characters
+		$inputId = quotemeta(quotemeta($inputId));
 
 		// Initialise it
 		$html = '<script type="text/javascript">';
-		$html .= '$("#' . $inputId . '").intlTelInput({';
-		$html .= 'utilsScript: "' . $js . '",';
-		$html .= '});';
+		$html .= '$("#' . $inputId . '").intlTelInput(';
+		$html .= json_encode($options, JSON_UNESCAPED_SLASHES);
+		$html .= ');';
 		$html .= '</script>';
 
 		return ( $html );
@@ -43,13 +51,18 @@ if ( ! function_exists('ciphonenumber_script_init'))
 
 if ( ! function_exists('ciphonenumber_input'))
 {
-	function ciphonenumber_input($phoneNumber = NULL, $inputName = 'phone')
+	function ciphonenumber_input($phoneNumber = NULL, $inputName = 'phone', array $attributes = array())
 	{
-		$input = form_input($inputName, $phoneNumber, array(
-				'type' => 'tel',
-				'id' => $inputName,
-				'placeholder' => __("Phone number")
-		));
+		$attributes = array_merge(
+			array(
+					'type' => 'tel',
+					'id' => $inputName,
+					'placeholder' => __("Phone number")
+			),
+			$attributes
+		);
+
+		$input = form_input($inputName, $phoneNumber, $attributes);
 
 		return ( $input );
 	}
@@ -97,10 +110,10 @@ if ( ! function_exists('ciphonenumber_script'))
 
 if ( ! function_exists('ciphonenumber_script_jquery'))
 {
-	function ciphonenumber_script_jquery()
+	function ciphonenumber_script_jquery($version = '1.11.1')
 	{
 		// Include jQuery
-		$html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>';
+		$html = '<script src="//ajax.googleapis.com/ajax/libs/jquery/' . $version . '/jquery.min.js"></script>';
 
 		return ( $html );
 	}
