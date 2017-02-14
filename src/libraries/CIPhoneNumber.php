@@ -25,6 +25,12 @@ class CIPhoneNumber
         return ( PhoneNumberUtil::getInstance()->isValidNumber($phoneNumberInstance) );
     }
 
+    public function formatNationalNumber($phoneNumber, $countryIso = NULL)
+    {
+        $phoneNumberInstance = $this->parse($phoneNumber, $countryIso);
+        return ( PhoneNumberUtil::getInstance()->formatNationalNumberWithCarrierCode($phoneNumberInstance, '') );
+    }
+
     public function form_validation($phoneNumber)
     {
         $phoneNumberInstance = $this->parse($phoneNumber);
